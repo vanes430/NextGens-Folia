@@ -1,8 +1,6 @@
 package com.muhammaddaffa.nextgens.generators.listeners;
 
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.Common;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.mdlib.utils.Placeholder;
 import com.muhammaddaffa.mdlib.xseries.particles.XParticle;
 import com.muhammaddaffa.nextgens.NextGens;
@@ -13,6 +11,7 @@ import com.muhammaddaffa.nextgens.generators.action.InteractAction;
 import com.muhammaddaffa.nextgens.generators.managers.GeneratorManager;
 import com.muhammaddaffa.nextgens.users.UserManager;
 import com.muhammaddaffa.nextgens.users.models.User;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import com.muhammaddaffa.nextgens.utils.Utils;
 import com.muhammaddaffa.nextgens.utils.VisualAction;
 import org.bukkit.Bukkit;
@@ -171,7 +170,7 @@ public record GeneratorBreakListener(
         }
 
         if (config.getBoolean("generator-break-options.particles")) {
-            ExecutorManager.getProvider().async(() -> block.getWorld().spawnParticle(XParticle.CLOUD.get(), block.getLocation().add(0.5, 0, 0.5), 30, 0.25, 0.25, 0.25, 3));
+            FoliaHelper.runAtLocation(block.getLocation(), () -> block.getWorld().spawnParticle(XParticle.CLOUD.get(), block.getLocation().add(0.5, 0, 0.5), 30, 0.25, 0.25, 0.25, 3));
         }
     }
 

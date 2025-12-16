@@ -2,7 +2,6 @@ package com.muhammaddaffa.nextgens.gui;
 
 import com.muhammaddaffa.mdlib.fastinv.FastInv;
 import com.muhammaddaffa.mdlib.hooks.VaultEconomy;
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.*;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.generators.ActiveGenerator;
@@ -12,6 +11,7 @@ import com.muhammaddaffa.nextgens.generators.listeners.helpers.GeneratorParticle
 import com.muhammaddaffa.nextgens.generators.managers.GeneratorManager;
 import com.muhammaddaffa.nextgens.users.UserManager;
 import com.muhammaddaffa.nextgens.utils.*;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -143,7 +143,7 @@ public class FixInventory extends FastInv {
                     .add("{gen}", this.generator.displayName())
                     .add("{cost}", Common.digits(this.generator.fixCost())));
             // play particle
-            ExecutorManager.getProvider().async(() -> {
+            FoliaHelper.runAsync(() -> {
                 if (NextGens.DEFAULT_CONFIG.getConfig().getBoolean("corrupt-fix-options.particles")) {
                     GeneratorParticle.successParticle(block, generator);
                 }

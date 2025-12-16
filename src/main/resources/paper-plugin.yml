@@ -1,0 +1,67 @@
+name: NextGens
+version: '${project.version}'
+main: com.muhammaddaffa.nextgens.NextGens
+api-version: '1.21'
+authors: [aglerr]
+description: A next generation gens tycoon plugin
+website: https://muhammaddaffa.com
+load: POSTWORLD
+dependencies:
+  server:
+    Vault:
+      load: BEFORE
+      required: true
+    PlaceholderAPI:
+      load: BEFORE
+      required: true
+    MyWorlds:
+      load: BEFORE
+      required: false
+    Multiverse-Core:
+      load: BEFORE
+      required: false
+    BentoBox:
+      load: BEFORE
+      required: false
+    HolographicDisplays:
+      load: BEFORE
+      required: false
+    DecentHolograms:
+      load: BEFORE
+      required: false
+    SuperiorSkyblock2:
+      load: BEFORE
+      required: false
+    ShopGUIPlus:
+      load: BEFORE
+      required: false
+    WildTools:
+      load: BEFORE
+      required: false
+    DeluxeSellwands:
+      load: BEFORE
+      required: false
+    LWC:
+      load: BEFORE
+      required: false
+    AdvancedChests:
+      load: BEFORE
+      required: false
+    FabledSkyblock:
+      load: BEFORE
+      required: false
+    ItemsAdder:
+      load: BEFORE
+      required: false
+    AxBoosters:
+      load: BEFORE
+      required: false
+    Bolt:
+      load: BEFORE
+      required: false
+    Slimefun:
+      load: BEFORE
+      required: false
+    FancyHolograms:
+      load: BEFORE
+      required: false

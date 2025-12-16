@@ -1,10 +1,9 @@
 package com.muhammaddaffa.nextgens.database.listeners;
 
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.database.ChunkCoord;
 import com.muhammaddaffa.nextgens.generators.managers.GeneratorManager;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import org.bukkit.Chunk;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -38,7 +37,7 @@ public record GeneratorLoadChunkListener(
         if (list == null || list.isEmpty()) return;
 
         // Proceed to load the active generators
-        ExecutorManager.getProvider().async(() -> this.generatorManager.loadActiveGenerator(key, list));
+        FoliaHelper.runAsync(() -> this.generatorManager.loadActiveGenerator(key, list));
     }
 
 }

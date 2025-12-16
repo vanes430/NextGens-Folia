@@ -79,8 +79,7 @@ public class SellwandListener implements Listener {
                     }
                 }
 
-                List<Inventory> inventories = advancedChest.getPages().values()
-                        .stream()
+                List<Inventory> inventories = advancedChest.getPages().stream()
                         .map(InteractiveInventory::getBukkitInventory)
                         .toList();
 

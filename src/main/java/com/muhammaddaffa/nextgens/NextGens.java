@@ -3,11 +3,9 @@ package com.muhammaddaffa.nextgens;
 import com.bgsoftware.wildtools.api.WildToolsAPI;
 import com.muhammaddaffa.mdlib.MDLib;
 import com.muhammaddaffa.mdlib.configupdater.ConfigUpdater;
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.updatechecker.UpdateCheckSource;
 import com.muhammaddaffa.mdlib.updatechecker.UpdateChecker;
 import com.muhammaddaffa.mdlib.utils.Config;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.mdlib.utils.Logger;
 import com.muhammaddaffa.nextgens.api.GeneratorAPI;
 import com.muhammaddaffa.nextgens.autosell.AutosellManager;
@@ -34,6 +32,7 @@ import com.muhammaddaffa.nextgens.sellwand.listeners.SellwandListener;
 import com.muhammaddaffa.nextgens.sellwand.managers.SellwandManager;
 import com.muhammaddaffa.nextgens.users.UserManager;
 import com.muhammaddaffa.nextgens.users.UserRepository;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import com.muhammaddaffa.nextgens.utils.Settings;
 import com.muhammaddaffa.nextgens.worth.WorthManager;
 import dev.norska.dsw.DeluxeSellwands;
@@ -110,6 +109,8 @@ public final class NextGens extends JavaPlugin {
     @Override
     public void onEnable() {
         MDLib.onEnable(this);
+        // initialize scheduler helper
+        FoliaHelper.setup(this);
         // --------------------------------------------
         instance = this;
 
@@ -152,7 +153,7 @@ public final class NextGens extends JavaPlugin {
         // load all generators
         this.generatorManager.loadGenerators();
 
-        ExecutorManager.getProvider().asyncLater(1, () -> {
+        FoliaHelper.runAsyncLater(() -> {
             // load chunk coords for active generators
             this.generatorManager.loadChunkCoords();
             // load users
@@ -171,10 +172,10 @@ public final class NextGens extends JavaPlugin {
 
             // update checker
             updateCheck();
-        });
+        }, 1L);
 
         // Check all loaded chunks on all worlds
-        ExecutorManager.getProvider().syncLater(20, () -> {
+        FoliaHelper.runLater(() -> {
             for (World w : Bukkit.getWorlds()) {
                 for (Chunk chunk : w.getLoadedChunks()) {
                     ChunkCoord key = new ChunkCoord(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
@@ -185,18 +186,18 @@ public final class NextGens extends JavaPlugin {
                     if (list == null || list.isEmpty()) continue;
 
                     // Proceed to load the active generators
-                    ExecutorManager.getProvider().async(() -> this.generatorManager.loadActiveGenerator(key, list));
+                    FoliaHelper.runAsync(() -> this.generatorManager.loadActiveGenerator(key, list));
                 }
             }
-        });
+        }, 20L);
 
         // We should reload the generators
-        ExecutorManager.getProvider().syncLater(40L, () -> {
+        FoliaHelper.runLater(() -> {
             // load back the generators
             this.generatorManager.loadGenerators();
             // refresh the active generator
-            ExecutorManager.getProvider().async(this.generatorManager::refreshActiveGenerator);
-        });
+            FoliaHelper.runAsync(this.generatorManager::refreshActiveGenerator);
+        }, 40L);
     }
 
     @Override
@@ -391,7 +392,7 @@ public final class NextGens extends JavaPlugin {
     }
 
     private void updateCheck(){
-        ExecutorManager.getProvider().async(() -> new UpdateChecker(this, UpdateCheckSource.SPIGOT, SPIGOT_ID + "")
+        FoliaHelper.runAsync(() -> new UpdateChecker(this, UpdateCheckSource.SPIGOT, SPIGOT_ID + "")
                 .setDownloadLink(SPIGOT_ID)
                 .checkEveryXHours(24)
                 .setNotifyOpsOnJoin(true)

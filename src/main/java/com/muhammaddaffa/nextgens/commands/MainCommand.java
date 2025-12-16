@@ -1,7 +1,6 @@
 package com.muhammaddaffa.nextgens.commands;
 
 import com.muhammaddaffa.mdlib.commands.commands.RoutedCommand;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.mdlib.utils.Placeholder;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.commands.subcommands.*;

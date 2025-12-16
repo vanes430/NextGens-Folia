@@ -1,6 +1,5 @@
 package com.muhammaddaffa.nextgens.generators.runnables;
 
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.Logger;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.api.events.generators.GeneratorGenerateItemEvent;
@@ -16,6 +15,7 @@ import com.muhammaddaffa.nextgens.generators.Generator;
 import com.muhammaddaffa.nextgens.generators.managers.GeneratorManager;
 import com.muhammaddaffa.nextgens.users.models.User;
 import com.muhammaddaffa.nextgens.users.UserManager;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import com.muhammaddaffa.nextgens.utils.GensRunnable;
 import com.muhammaddaffa.nextgens.utils.Settings;
 import org.bukkit.Bukkit;
@@ -189,9 +189,7 @@ public class GeneratorTask extends GensRunnable {
                 Generator finalChosenGenerator = chosenGenerator;
 
                 // execute it in sync task
-                ExecutorManager.getProvider().region(active.getLocation().getWorld(),
-                        active.getLocation().getBlockX() >> 4,
-                        active.getLocation().getBlockZ() >> 4, () -> {
+                FoliaHelper.runAtLocation(active.getLocation(), () -> {
                 // execute drop mechanics
                 //Logger.info("Generator " + generator.id() + " is dropping item!");
                 Block block = active.getLocation().getBlock();

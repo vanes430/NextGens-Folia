@@ -1,15 +1,14 @@
 package com.muhammaddaffa.nextgens.generators.listeners.helpers;
 
 import com.muhammaddaffa.mdlib.hooks.VaultEconomy;
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.Common;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.mdlib.utils.Placeholder;
 import com.muhammaddaffa.mdlib.xseries.particles.XParticle;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.api.events.generators.GeneratorUpgradeEvent;
 import com.muhammaddaffa.nextgens.generators.ActiveGenerator;
 import com.muhammaddaffa.nextgens.generators.Generator;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import com.muhammaddaffa.nextgens.utils.Utils;
 import com.muhammaddaffa.nextgens.utils.VisualAction;
 import org.bukkit.Bukkit;
@@ -81,7 +80,7 @@ public class GeneratorUpdateHelper {
                     .add("{cost}", Common.digits(generator.cost())));
         }
         // play particle
-        ExecutorManager.getProvider().async(() -> {
+        FoliaHelper.runAsync(() -> {
             if (NextGens.DEFAULT_CONFIG.getConfig().getBoolean("generator-upgrade-options.particles")) {
                 GeneratorParticle.successParticle(block, generator);
             }

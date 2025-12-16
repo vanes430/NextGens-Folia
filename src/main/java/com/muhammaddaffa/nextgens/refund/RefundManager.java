@@ -1,12 +1,11 @@
 package com.muhammaddaffa.nextgens.refund;
 
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.Common;
 import com.muhammaddaffa.mdlib.utils.Config;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.generators.Generator;
 import com.muhammaddaffa.nextgens.generators.managers.GeneratorManager;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -61,7 +60,7 @@ public class RefundManager {
         }
 
         // Remove player's data from config and save
-        ExecutorManager.getProvider().async(() -> removePlayerData(playerUUID));
+        FoliaHelper.runAsync(() -> removePlayerData(playerUUID));
     }
 
     /**

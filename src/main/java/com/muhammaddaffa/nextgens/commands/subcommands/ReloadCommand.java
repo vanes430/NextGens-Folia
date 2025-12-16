@@ -2,14 +2,13 @@ package com.muhammaddaffa.nextgens.commands.subcommands;
 
 import com.muhammaddaffa.mdlib.commands.commands.RoutedCommand;
 import com.muhammaddaffa.mdlib.fastinv.FastInvManager;
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.Config;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.cache.WorldBoostCache;
 import com.muhammaddaffa.nextgens.events.managers.EventManager;
 import com.muhammaddaffa.nextgens.generators.managers.GeneratorManager;
 import com.muhammaddaffa.nextgens.generators.runnables.GeneratorTask;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import com.muhammaddaffa.nextgens.utils.Settings;
 import com.muhammaddaffa.nextgens.worth.WorthManager;
 
@@ -29,7 +28,7 @@ public class ReloadCommand {
                     // load back the generator
                     generatorManager.loadGenerators();
                     // refresh the active generator
-                    ExecutorManager.getProvider().async(generatorManager::refreshActiveGenerator);
+                    FoliaHelper.runAsync(generatorManager::refreshActiveGenerator);
                     // events stuff
                     eventManager.loadEvents();
                     eventManager.refresh();

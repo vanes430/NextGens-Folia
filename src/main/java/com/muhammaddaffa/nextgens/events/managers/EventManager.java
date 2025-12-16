@@ -1,12 +1,11 @@
 package com.muhammaddaffa.nextgens.events.managers;
 
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.Common;
 import com.muhammaddaffa.mdlib.utils.Config;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.mdlib.utils.Logger;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.events.Event;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -133,7 +132,7 @@ public class EventManager {
             this.waitTime = this.getDefaultWaitTime();
         }
 
-        ExecutorManager.getProvider().asyncTimer(20L, 2L, () -> {
+        FoliaHelper.runAsyncTimer(() -> {
             // if the event is not enabled, don't bother it
             if (!this.isEnabled()) {
                 return;
@@ -145,7 +144,7 @@ public class EventManager {
                 this.whenEventIsRunning();
 
             }
-        });
+        }, 20L, 2L);
     }
 
     private void whenEventIsOnCooldown() {

@@ -1,14 +1,13 @@
 package com.muhammaddaffa.nextgens.generators.runnables;
 
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.Common;
 import com.muhammaddaffa.mdlib.utils.Config;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.mdlib.utils.Placeholder;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.api.events.generators.GeneratorCorruptedEvent;
 import com.muhammaddaffa.nextgens.generators.ActiveGenerator;
 import com.muhammaddaffa.nextgens.generators.managers.GeneratorManager;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import com.muhammaddaffa.nextgens.utils.GensRunnable;
 import com.muhammaddaffa.nextgens.utils.Settings;
 import org.bukkit.Bukkit;
@@ -77,7 +76,7 @@ public class CorruptionTask extends GensRunnable {
             // check for chances
             if (ThreadLocalRandom.current().nextDouble(101) <= active.getGenerator().corruptChance()) {
                 // must run in a sync task
-                ExecutorManager.getProvider().sync(() -> {
+                FoliaHelper.runAtLocation(active.getLocation(), () -> {
                     // get Player
                     Player player = Bukkit.getPlayer(active.getOwner());
                     // check for online-only option
@@ -91,7 +90,7 @@ public class CorruptionTask extends GensRunnable {
                         // increment the counter
                         actuallyCorrupted.getAndIncrement();
                         // Save the generator
-                        ExecutorManager.getProvider().async(() -> this.generatorManager.saveActiveGenerator(active));
+                        FoliaHelper.runAsync(() -> this.generatorManager.saveActiveGenerator(active));
                     }
                 });
             }

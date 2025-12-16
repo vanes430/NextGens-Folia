@@ -3,10 +3,10 @@ package com.muhammaddaffa.nextgens.commands;
 import com.muhammaddaffa.mdlib.MDLib;
 import com.muhammaddaffa.mdlib.commands.args.builtin.OnlinePlayerArg;
 import com.muhammaddaffa.mdlib.commands.commands.RoutedCommand;
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.*;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.users.UserManager;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -18,7 +18,7 @@ public class SellCommand extends RoutedCommand {
         if (config.getBoolean("sell-command")) {
             String command = config.getString("commands.sell.command");
             // Register command a tick later
-            ExecutorManager.getProvider().sync(() -> {
+            FoliaHelper.runLater(() -> {
                 Logger.info("Sell command is enabled, overriding and registering sell command...");
                 // unregister the command
                 try {
@@ -26,7 +26,7 @@ public class SellCommand extends RoutedCommand {
                 } catch (Exception ignored) { }
                 // register back the command
                 new SellCommand(command);
-            });
+            }, 1L);
         }
     }
 

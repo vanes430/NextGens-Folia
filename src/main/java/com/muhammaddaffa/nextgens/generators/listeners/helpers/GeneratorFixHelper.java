@@ -1,14 +1,13 @@
 package com.muhammaddaffa.nextgens.generators.listeners.helpers;
 
 import com.muhammaddaffa.mdlib.hooks.VaultEconomy;
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.Common;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.mdlib.utils.Placeholder;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.generators.ActiveGenerator;
 import com.muhammaddaffa.nextgens.generators.Generator;
 import com.muhammaddaffa.nextgens.generators.managers.GeneratorManager;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import com.muhammaddaffa.nextgens.utils.Utils;
 import com.muhammaddaffa.nextgens.utils.VisualAction;
 import org.bukkit.Particle;
@@ -40,12 +39,12 @@ public class GeneratorFixHelper {
                 .add("{gen}", generator.displayName())
                 .add("{cost}", Common.digits(generator.fixCost())));
         // play particle
-        ExecutorManager.getProvider().async(() -> {
+        FoliaHelper.runAsync(() -> {
             if (NextGens.DEFAULT_CONFIG.getConfig().getBoolean("corrupt-fix-options.particles")) {
                 GeneratorParticle.successParticle(block, generator);
             }
             // Save the generator
-            ExecutorManager.getProvider().async(() -> NextGens.getInstance().getGeneratorManager().saveActiveGenerator(active));
+            FoliaHelper.runAsync(() -> NextGens.getInstance().getGeneratorManager().saveActiveGenerator(active));
         });
         // give cashback to the player
         Utils.performCashback(player, NextGens.getInstance().getUserManager(), generator.fixCost());
@@ -82,7 +81,7 @@ public class GeneratorFixHelper {
         VaultEconomy.withdraw(player, cost);
         corrupted.forEach(active -> {
             active.setCorrupted(false);
-            ExecutorManager.getProvider().async(() -> generatorManager.saveActiveGenerator(active));
+            FoliaHelper.runAsync(() -> generatorManager.saveActiveGenerator(active));
         });
 
         // Sends message and perform cashback

@@ -8,7 +8,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.util.Consumer;
+import java.util.function.Consumer;
 
 import java.io.File;
 import java.io.IOException;

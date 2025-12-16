@@ -3,13 +3,12 @@ package com.muhammaddaffa.nextgens.commands.subcommands;
 import com.muhammaddaffa.mdlib.commands.args.builtin.DoubleArg;
 import com.muhammaddaffa.mdlib.commands.args.builtin.OnlinePlayerArg;
 import com.muhammaddaffa.mdlib.commands.commands.RoutedCommand;
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.Common;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.mdlib.utils.Placeholder;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.users.UserManager;
 import com.muhammaddaffa.nextgens.users.models.User;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import org.bukkit.entity.Player;
 
 public class AddMultiplierCommand {
@@ -26,7 +25,7 @@ public class AddMultiplierCommand {
                     User user = manager.getUser(player);
                     user.addMultiplier(amount);
                     // save the user data afterward
-                    ExecutorManager.getProvider().async(() -> NextGens.getInstance().getUserRepository().saveUser(user));
+                    FoliaHelper.runAsync(() -> NextGens.getInstance().getUserRepository().saveUser(user));
                     // send message
                     NextGens.DEFAULT_CONFIG.sendMessage(sender, "messages.multiplier-increase", new Placeholder()
                             .add("{player}", player.getName())

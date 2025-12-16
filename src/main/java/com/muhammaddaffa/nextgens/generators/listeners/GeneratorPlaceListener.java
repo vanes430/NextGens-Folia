@@ -1,8 +1,6 @@
 package com.muhammaddaffa.nextgens.generators.listeners;
 
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.Common;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.mdlib.utils.Placeholder;
 import com.muhammaddaffa.mdlib.xseries.particles.XParticle;
 import com.muhammaddaffa.nextgens.NextGens;
@@ -13,6 +11,7 @@ import com.muhammaddaffa.nextgens.generators.listeners.helpers.GeneratorParticle
 import com.muhammaddaffa.nextgens.generators.managers.GeneratorManager;
 import com.muhammaddaffa.nextgens.requirements.GensRequirement;
 import com.muhammaddaffa.nextgens.users.UserManager;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import com.muhammaddaffa.nextgens.utils.Utils;
 import com.muhammaddaffa.nextgens.utils.VisualAction;
 import org.bukkit.Bukkit;
@@ -150,7 +149,7 @@ public record GeneratorPlaceListener(
                 .add("{current}", this.generatorManager.getGeneratorCount(player))
                 .add("{max}", this.userManager.getMaxSlot(player)));
 
-        ExecutorManager.getProvider().async(() -> {
+        FoliaHelper.runAsync(() -> {
             if (config.getBoolean("generator-place-options.particles")) {
                 GeneratorParticle.successParticle(block, generator);
             }

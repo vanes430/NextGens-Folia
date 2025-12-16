@@ -4,12 +4,11 @@ import com.muhammaddaffa.mdlib.commands.args.ArgSuggester;
 import com.muhammaddaffa.mdlib.commands.args.builtin.LiteralArg;
 import com.muhammaddaffa.mdlib.commands.args.builtin.StringArg;
 import com.muhammaddaffa.mdlib.commands.commands.RoutedCommand;
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.mdlib.utils.Placeholder;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.users.UserManager;
 import com.muhammaddaffa.nextgens.users.models.User;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -81,7 +80,7 @@ public class TrustCommand {
         }
         user.addMember(targetPlayer.getUniqueId());
         // save the user
-        ExecutorManager.getProvider().async(() -> NextGens.getInstance().getUserRepository().saveUser(user));
+        FoliaHelper.runAsync(() -> NextGens.getInstance().getUserRepository().saveUser(user));
         // send message
         NextGens.DEFAULT_CONFIG.sendMessage(player, "messages.add-member", new Placeholder()
                 .add("{player}", targetPlayer.getName()));
@@ -106,7 +105,7 @@ public class TrustCommand {
         }
         user.removeMember(playerName);
         // Save the user data
-        ExecutorManager.getProvider().async(() -> NextGens.getInstance().getUserRepository().saveUser(user));
+        FoliaHelper.runAsync(() -> NextGens.getInstance().getUserRepository().saveUser(user));
         // Send messages
         NextGens.DEFAULT_CONFIG.sendMessage(player, "messages.remove-member", new Placeholder()
                 .add("{player}", playerName));

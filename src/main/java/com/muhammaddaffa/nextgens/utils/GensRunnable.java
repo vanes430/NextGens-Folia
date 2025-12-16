@@ -1,22 +1,14 @@
 package com.muhammaddaffa.nextgens.utils;
 
-import com.muhammaddaffa.mdlib.MDLib;
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
-import com.muhammaddaffa.mdlib.task.handleTask.HandleTask;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class GensRunnable implements Runnable {
 
-    private HandleTask handleTask;
-
-    public synchronized boolean isCancelled() {
-        this.checkHandleTask();
-        return this.handleTask.isCancelled();
-    }
+    private Object handleTask;
 
     public synchronized void cancel() {
         this.checkHandleTask();
-        this.handleTask.cancel();
+        FoliaHelper.cancel(this.handleTask);
     }
 
     private void checkHandleTask() {
@@ -25,14 +17,14 @@ public abstract class GensRunnable implements Runnable {
         }
     }
 
-    public synchronized HandleTask runTaskTimerAsynchronously(@NotNull Object plugin, long delay, long period) {
+    public synchronized void runTaskTimerAsynchronously(@NotNull Object plugin, long delay, long period) {
         this.isRunning();
-        return this.handleTask = ExecutorManager.getProvider().asyncTimer(delay, period, this);
+        this.handleTask = FoliaHelper.runAsyncTimer(this, delay, period);
     }
 
-    public synchronized HandleTask runTaskTimer(@NotNull Object plugin, long delay, long period) {
+    public synchronized void runTaskTimer(@NotNull Object plugin, long delay, long period) {
         this.isRunning();
-        return this.handleTask = ExecutorManager.getProvider().syncTimer(delay, period, this);
+        this.handleTask = FoliaHelper.runSyncTimer(this, delay, period);
     }
 
     public synchronized void isRunning() {
@@ -41,12 +33,4 @@ public abstract class GensRunnable implements Runnable {
         }
     }
 
-    @NotNull
-    public synchronized HandleTask getHandleTask() {
-        return handleTask;
-    }
-
-    public synchronized void setHandleTask(@NotNull HandleTask handleTask) {
-        this.handleTask = handleTask;
-    }
 }

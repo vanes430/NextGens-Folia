@@ -3,15 +3,14 @@ package com.muhammaddaffa.nextgens.hooks.ssb2;
 import com.bgsoftware.superiorskyblock.api.events.*;
 import com.bgsoftware.superiorskyblock.api.island.Island;
 import com.bgsoftware.superiorskyblock.api.wrappers.SuperiorPlayer;
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.Common;
 import com.muhammaddaffa.mdlib.utils.Config;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.generators.ActiveGenerator;
 import com.muhammaddaffa.nextgens.generators.Generator;
 import com.muhammaddaffa.nextgens.generators.managers.GeneratorManager;
 import com.muhammaddaffa.nextgens.refund.RefundManager;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -79,7 +78,7 @@ public record SSB2Listener(
                     this.refundManager.delayedGiveGeneratorItem(superiorPlayer.getUniqueId(), generator.id());
                 } else {
                     // if player is online, give them the generators
-                    ExecutorManager.getProvider().sync(() -> Common.addInventoryItem(player, generator.createItem(1)));
+                    FoliaHelper.runAtEntity(player, () -> Common.addInventoryItem(player, generator.createItem(1)));
                 }
             }
 

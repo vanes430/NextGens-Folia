@@ -4,13 +4,12 @@ import com.muhammaddaffa.mdlib.commands.args.builtin.DoubleArg;
 import com.muhammaddaffa.mdlib.commands.args.builtin.IntArg;
 import com.muhammaddaffa.mdlib.commands.args.builtin.OnlinePlayerArg;
 import com.muhammaddaffa.mdlib.commands.commands.RoutedCommand;
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.mdlib.utils.Placeholder;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.generators.managers.GeneratorManager;
 import com.muhammaddaffa.nextgens.users.UserManager;
 import com.muhammaddaffa.nextgens.users.models.User;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import org.bukkit.entity.Player;
 
 public class AddMaxCommand {
@@ -26,7 +25,7 @@ public class AddMaxCommand {
                     User user = userManager.getUser(player);
                     user.addBonus(amount);
                     // save the user data afterward
-                    ExecutorManager.getProvider().async(() -> NextGens.getInstance().getUserRepository().saveUser(user));
+                    FoliaHelper.runAsync(() -> NextGens.getInstance().getUserRepository().saveUser(user));
                     // send message to the command sender
                     NextGens.DEFAULT_CONFIG.sendMessage(sender, "messages.add-max", new Placeholder()
                             .add("{amount}", amount)

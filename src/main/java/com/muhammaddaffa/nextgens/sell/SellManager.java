@@ -1,9 +1,7 @@
 package com.muhammaddaffa.nextgens.sell;
 
 import com.muhammaddaffa.mdlib.hooks.VaultEconomy;
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.Common;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.mdlib.utils.Placeholder;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.api.GeneratorAPI;
@@ -14,6 +12,7 @@ import com.muhammaddaffa.nextgens.events.managers.EventManager;
 import com.muhammaddaffa.nextgens.sellwand.models.SellwandData;
 import com.muhammaddaffa.nextgens.users.models.User;
 import com.muhammaddaffa.nextgens.users.UserManager;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import com.muhammaddaffa.nextgens.utils.SellData;
 import com.muhammaddaffa.nextgens.utils.Utils;
 import com.muhammaddaffa.nextgens.utils.VisualAction;
@@ -110,7 +109,7 @@ public class SellManager {
         }
 
         // Save user data asynchronously
-        ExecutorManager.getProvider().async(() -> NextGens.getInstance().getUserRepository().saveUser(user));
+        FoliaHelper.runAsync(() -> NextGens.getInstance().getUserRepository().saveUser(user));
 
         return data;
     }

@@ -1,11 +1,10 @@
 package com.muhammaddaffa.nextgens.generators;
 
-import com.muhammaddaffa.mdlib.task.ExecutorManager;
 import com.muhammaddaffa.mdlib.utils.Common;
-import com.muhammaddaffa.mdlib.utils.Executor;
 import com.muhammaddaffa.mdlib.utils.LocationUtils;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.generators.hologram.FancyHologramsHook;
+import com.muhammaddaffa.nextgens.utils.FoliaHelper;
 import com.muhammaddaffa.nextgens.utils.Settings;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
@@ -33,7 +32,7 @@ public class CorruptedHologram {
         // Holographic Displays
         if (Bukkit.getPluginManager().getPlugin("HolographicDisplays") != null) {
             // execute it in sync task
-            ExecutorManager.getProvider().sync(() -> {
+            FoliaHelper.runAtLocation(this.hologramLocation, () -> {
                 // get the holographic api
                 HolographicDisplaysAPI api = HolographicDisplaysAPI.get(NextGens.getInstance());
                 // get the hologram position
@@ -54,7 +53,7 @@ public class CorruptedHologram {
         }
         // FancyHolograms
         if (Bukkit.getPluginManager().getPlugin("FancyHolograms") != null) {
-            ExecutorManager.getProvider().sync(() -> {
+            FoliaHelper.runAtLocation(this.hologramLocation, () -> {
                 FancyHologramsHook.spawn(this.name, this.hologramLocation, lines);
             });
         }
@@ -64,7 +63,7 @@ public class CorruptedHologram {
         // Holographic Displays
         if (Bukkit.getPluginManager().getPlugin("HolographicDisplays") != null) {
             // execute in sync task
-            ExecutorManager.getProvider().sync(() -> {
+            FoliaHelper.runAtLocation(this.hologramLocation, () -> {
                 // get the holographic api
                 HolographicDisplaysAPI api = HolographicDisplaysAPI.get(NextGens.getInstance());
                 // get the position of the hologram
@@ -87,7 +86,7 @@ public class CorruptedHologram {
             }
         }
         if (Bukkit.getPluginManager().getPlugin("FancyHolograms") != null) {
-            ExecutorManager.getProvider().sync(() -> {
+            FoliaHelper.runAtLocation(this.hologramLocation, () -> {
                 FancyHologramsHook.destroy(this.name);
             });
         }
