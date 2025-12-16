@@ -107,18 +107,13 @@ public class Utils {
     }
 
     public static int getCashback(Player player) {
-        int cashback = 0;
-        for (PermissionAttachmentInfo pai : player.getEffectivePermissions()) {
-            String permission = pai.getPermission();
-            if (!permission.startsWith("nextgens.cashback.")) {
-                continue;
-            }
-            int current = Integer.parseInt(permission.split("\\.")[2]);
-            if (current > cashback) {
-                cashback = current;
+        // Iterate from 100 down to 1 to find the highest cashback percentage
+        for (int i = 100; i >= 1; i--) {
+            if (player.hasPermission("nextgens.cashback." + i)) {
+                return i;
             }
         }
-        return cashback;
+        return 0;
     }
 
     public static String formatBalance(long value) {

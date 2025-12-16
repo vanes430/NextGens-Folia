@@ -13,27 +13,18 @@ public class Autosell {
      */
 
     public static int getAutosellInventoryInterval(Player player) {
-        int interval = 0;
-        for (PermissionAttachmentInfo pai : player.getEffectivePermissions()) {
-            String permission = pai.getPermission();
-            if (permission.startsWith("nextgens.autosell.inv")) {
-                String split = permission.split("\\.")[3];
-                if (!Common.isInt(split)) continue;
-                int permissionInterval = Integer.parseInt(split);
-                if (permissionInterval < interval) {
-                    interval = permissionInterval;
-                }
+        // Iterate from smallest interval (1 second) to a reasonable maximum (60 seconds)
+        for (int i = 1; i <= 60; i++) {
+            if (player.hasPermission("nextgens.autosell.inv." + i)) {
+                return i; // Return the smallest interval found
             }
         }
-        return interval;
+        return 0;
     }
 
     public static boolean hasAutosellInventoryPermission(Player player) {
-        for (PermissionAttachmentInfo pai : player.getEffectivePermissions()) {
-            String permission = pai.getPermission();
-            if (permission.startsWith("nextgens.autosell.inv")) return true;
-        }
-        return false;
+        // If getAutosellInventoryInterval returns a value > 0, it means the player has an autosell inventory permission
+        return getAutosellInventoryInterval(player) > 0;
     }
 
     public static boolean hasAutosellGensPermission(Player player) {

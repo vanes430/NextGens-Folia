@@ -71,14 +71,13 @@ public class UserManager {
         if (config.getBoolean("default-max-generator.enabled")) {
             max += config.getInt("default-max-generator.amount");
         }
-        for (PermissionAttachmentInfo pai : player.getEffectivePermissions()) {
-            String permission = pai.getPermission();
-            if (!permission.startsWith("nextgens.max.")) {
-                continue;
-            }
-            int current = Integer.parseInt(permission.split("\\.")[2]);
-            if (current > max) {
-                max = current;
+
+        // Iterate from a high number down to 1 to find the highest nextgens.max.<amount> permission
+        // Assuming a reasonable maximum of 1000, adjust if needed based on server's expected limits
+        for (int i = 1000; i >= 1; i--) {
+            if (player.hasPermission("nextgens.max." + i)) {
+                max = Math.max(max, i); // Take the maximum between current max and the permission-based max
+                break; // Found the highest permission, can stop
             }
         }
 
