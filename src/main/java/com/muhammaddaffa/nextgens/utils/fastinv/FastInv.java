@@ -90,10 +90,18 @@ public class FastInv implements InventoryHolder {
         }
     }
 
+    public void setItems(int[] slots, ItemStack item) {
+        setItems(slots, item, null);
+    }
+
     public void setItems(int[] slots, ItemStack item, Consumer<InventoryClickEvent> handler) {
         for (int slot : slots) {
             setItem(slot, item, handler);
         }
+    }
+
+    public void setItems(List<Integer> slots, ItemStack item) {
+        setItems(slots, item, null);
     }
 
     public void setItems(List<Integer> slots, ItemStack item, Consumer<InventoryClickEvent> handler) {
@@ -106,6 +114,11 @@ public class FastInv implements InventoryHolder {
     public void removeItem(int slot) {
         inventory.clear(slot);
         itemHandlers.remove(slot);
+    }
+    
+    public void clearItems() {
+        inventory.clear();
+        itemHandlers.clear();
     }
 
     public void addItem(ItemStack item) {
@@ -132,7 +145,15 @@ public class FastInv implements InventoryHolder {
         this.openHandler = openHandler;
     }
 
+    public void addOpenHandler(Consumer<InventoryOpenEvent> openHandler) {
+        this.openHandler = openHandler;
+    }
+
     public void setCloseHandler(Consumer<InventoryCloseEvent> closeHandler) {
+        this.closeHandler = closeHandler;
+    }
+
+    public void addCloseHandler(Consumer<InventoryCloseEvent> closeHandler) {
         this.closeHandler = closeHandler;
     }
 
