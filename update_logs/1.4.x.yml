@@ -13,6 +13,7 @@
 
 ## Version 1.4.2
 [+] Add: Integrated FoliaLib for robust cross-platform scheduling (Spigot/Paper/Folia).
+[+] Add: Updated Paper API to version 1.21.8.
 [+] Refactor: Migrated legacy string-based item handling to modern Component API (Adventure).
 [+] Refactor: Converted complex if-else chains to Switch statements in GeneratorTask & CorruptedHologram.
 [+] Fix: Resolved duplicate hologram spawning issues when multiple hologram plugins are installed.
