@@ -15,3 +15,5 @@
 [+] Full Folia Support: Integrated FoliaLib for robust cross-platform scheduling.
 [+] Code Cleanup: Removed deprecated API usage in FastInv and Utils.
 [+] Fix: Resolved compilation warnings for future-proof code.
+[+] Fix: Resolved duplicate hologram spawning issues with FancyHolograms and DecentHolograms.
+[+] Refactor: Improved logic in CorruptedHologram and GeneratorTask using switch statements.

@@ -123,7 +123,7 @@ public class GeneratorTask extends GensRunnable {
             }
             Generator chosenGenerator = generator;
             double interval = generator.interval();
-            int dropAmount;
+            int dropAmount = 1;
 
             /**
              * World multipliers code
@@ -139,47 +139,44 @@ public class GeneratorTask extends GensRunnable {
             /**
              * Event-related code
              */
-            if (event != null) {
-                if (event.getType() == Event.Type.GENERATOR_SPEED &&
-                        event.getSpeedMultiplier() != null &&
-                        !event.getBlacklistedGenerators().contains(generator.id())) {
-                    // get the speed boost
-                    Double boost = event.getSpeedMultiplier();
-                    double discount = (generator.interval() * boost) / 100;
-                    // deduct the interval
-                    interval = interval - discount;
-                }
-                if (event.getType() == Event.Type.GENERATOR_UPGRADE &&
-                        event.getTierUpgrade() != null &&
-                        !event.getBlacklistedGenerators().contains(generator.id())) {
-                    // get the amount of tier upgrade
-                    Integer amount = event.getTierUpgrade();
-                    // make a for-each and upgrade the generator
-                    for (int i = 0; i < amount; i++) {
-                        if (chosenGenerator.nextTier() == null) {
-                            break;
+            if (event != null && !event.getBlacklistedGenerators().contains(generator.id())) {
+                switch (event.getType()) {
+                    case GENERATOR_SPEED -> {
+                        if (event.getSpeedMultiplier() != null) {
+                            // get the speed boost
+                            Double boost = event.getSpeedMultiplier();
+                            double discount = (generator.interval() * boost) / 100;
+                            // deduct the interval
+                            interval = interval - discount;
                         }
-                        Generator upgraded = this.generatorManager.getGenerator(chosenGenerator.nextTier());
-                        if (upgraded != null) {
-                            chosenGenerator = upgraded;
+                    }
+                    case GENERATOR_UPGRADE -> {
+                        if (event.getTierUpgrade() != null) {
+                            // get the amount of tier upgrade
+                            Integer amount = event.getTierUpgrade();
+                            // make a for-each and upgrade the generator
+                            for (int i = 0; i < amount; i++) {
+                                if (chosenGenerator.nextTier() == null) {
+                                    break;
+                                }
+                                Generator upgraded = this.generatorManager.getGenerator(chosenGenerator.nextTier());
+                                if (upgraded != null) {
+                                    chosenGenerator = upgraded;
+                                }
+                            }
+                        }
+                    }
+                    case MIXED_UP -> {
+                        // get random generator
+                        chosenGenerator = this.generatorManager.getRandomGenerator();
+                    }
+                    case DROP_MULTIPLIER -> {
+                        if (event.getDropMultiplier() != null) {
+                            // get the drop multiplier and set the drop amount
+                            dropAmount = Math.max(1, event.getDropMultiplier());
                         }
                     }
                 }
-                if (event.getType() == Event.Type.MIXED_UP &&
-                        !event.getBlacklistedGenerators().contains(generator.id())) {
-                    // get random generator
-                    chosenGenerator = this.generatorManager.getRandomGenerator();
-                }
-                if (event.getType() == Event.Type.DROP_MULTIPLIER &&
-                        event.getDropMultiplier() != null &&
-                        !event.getBlacklistedGenerators().contains(generator.id())) {
-                    // get the drop multiplier and set the drop amount
-                    dropAmount = Math.max(1, event.getDropMultiplier());
-                } else {
-                    dropAmount = 1;
-                }
-            } else {
-                dropAmount = 1;
             }
             // add timer
             active.addTimer(0.25);
@@ -187,6 +184,7 @@ public class GeneratorTask extends GensRunnable {
             // check if the generator should drop
             if (active.getTimer() >= interval) {
                 Generator finalChosenGenerator = chosenGenerator;
+                int finalDropAmount = dropAmount;
 
                 // execute it in sync task
                 FoliaHelper.runAtLocation(active.getLocation(), () -> {
@@ -200,7 +198,7 @@ public class GeneratorTask extends GensRunnable {
                     // Generate the random drop
                     Drop drop = finalChosenGenerator.getRandomDrop();
                     // create the event
-                    GeneratorGenerateItemEvent generatorEvent = new GeneratorGenerateItemEvent(finalChosenGenerator, active, drop, dropAmount);
+                    GeneratorGenerateItemEvent generatorEvent = new GeneratorGenerateItemEvent(finalChosenGenerator, active, drop, finalDropAmount);
                     Bukkit.getPluginManager().callEvent(generatorEvent);
                     if (generatorEvent.isCancelled()) {
                         active.setTimer(0);
