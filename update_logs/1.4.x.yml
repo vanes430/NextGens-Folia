@@ -19,3 +19,7 @@
 [+] Fix: Resolved duplicate hologram spawning issues when multiple hologram plugins are installed.
 [+] Fix: Prioritized FancyHolograms over other providers in Corrupted Generators.
 [+] Fix: Eliminated all compilation warnings and deprecated API usage.
+
+## Version 1.4.3
+[+] Fix: Resolved 'IncompatibleClassChangeError' related to InventoryView in 1.21+ by relocating and updating FastInv implementation.
+

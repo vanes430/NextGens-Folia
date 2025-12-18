@@ -6,7 +6,7 @@
 
     <groupId>com.muhammaddaffa</groupId>
     <artifactId>NextGens</artifactId>
-    <version>1.4.2</version>
+    <version>1.4.3</version>
     <packaging>jar</packaging>
 
     <name>NextGens</name>
@@ -57,6 +57,10 @@
                             <pattern>org.bstats</pattern>
                             <!-- Replace this with your package! -->
                             <shadedPattern>com.muhammaddaffa.nextgens.utils.bstats</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>com.muhammaddaffa.mdlib.fastinv</pattern>
+                            <shadedPattern>com.muhammaddaffa.nextgens.utils.fastinv</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>com.muhammaddaffa.mdlib</pattern>
