@@ -14,9 +14,4 @@ Complete guide covering features, commands, permissions, and installation instru
 ### 🇮🇩 [Dokumentasi Bahasa Indonesia (README_ID.md)](README_ID.md)
 Panduan lengkap mencakup fitur, perintah, izin, dan cara instalasi dalam Bahasa Indonesia.
 
----
-
-## 🚀 Quick Links
-*   [Bug Reports / Issues](https://github.com/vanes430/NextGens/issues)
-
 **NextGens** © 2025 - Developed by BlockSmithStudio / Modified by Vanes430
