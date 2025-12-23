@@ -212,7 +212,7 @@ sellwand:
       - HIDE_ATTRIBUTES
       - HIDE_ENCHANTS
     enchantments:
-      - DURABILITY;1
+      - UNBREAKING;1
     lore:
       - '&7'
       - '&b・&7Right Click &f→ &cSell Container'

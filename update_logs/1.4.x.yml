@@ -22,4 +22,5 @@
 
 ## Version 1.4.3
 [+] Fix: Resolved 'IncompatibleClassChangeError' related to InventoryView in 1.21+ by relocating and updating FastInv implementation.
+[+] Fix: Corrected invalid enchantment name 'DURABILITY' to 'UNBREAKING' in sellwand configuration causing IllegalArgumentException.
 
