@@ -24,4 +24,6 @@
 [+] Fix: Resolved 'IncompatibleClassChangeError' related to InventoryView in 1.21+ by relocating and updating FastInv implementation.
 [+] Fix: Corrected invalid enchantment name 'DURABILITY' to 'UNBREAKING' in sellwand configuration causing IllegalArgumentException.
 [+] Fix: Resolved 'IllegalStateException: Async chunk retrieval' in GeneratorLoadChunkListener by using block coordinates to ensure Folia safety.
+[+] Fix: Added WorldGuard and GriefPrevention protection checks to Sellwand.
+[+] Fix: Increased Sellwand interaction event priority to HIGHEST for better compatibility with protection plugins.
 

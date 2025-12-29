@@ -9,6 +9,12 @@ import com.muhammaddaffa.mdlib.utils.Logger;
 import com.muhammaddaffa.nextgens.NextGens;
 import com.muhammaddaffa.nextgens.sellwand.managers.SellwandManager;
 import com.muhammaddaffa.nextgens.utils.Utils;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.flags.Flags;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
@@ -39,7 +45,7 @@ public class SellwandListener implements Listener {
         this.sellwandManager = sellwandManager;
     }
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         Player player = event.getPlayer();
@@ -106,6 +112,25 @@ public class SellwandListener implements Listener {
     }
 
     private boolean hasAccess(Player player, Block block) {
+        // GriefPrevention Check
+        if (Bukkit.getPluginManager().isPluginEnabled("GriefPrevention")) {
+            me.ryanhamshire.GriefPrevention.Claim claim = GriefPrevention.instance.dataStore.getClaimAt(block.getLocation(), false, null);
+            if (claim != null) {
+                String reason = claim.allowAccess(player);
+                if (reason != null) {
+                    return false;
+                }
+            }
+        }
+
+        // WorldGuard Check
+        if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
+            RegionQuery query = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery();
+            if (!query.testState(BukkitAdapter.adapt(block.getLocation()), WorldGuardPlugin.inst().wrapPlayer(player), Flags.INTERACT)) {
+                return false;
+            }
+        }
+
         // Bolt Check
         if (Bukkit.getPluginManager().isPluginEnabled("Bolt")) {
             BoltAPI bolt = NextGens.getInstance().getBoltAPI();
