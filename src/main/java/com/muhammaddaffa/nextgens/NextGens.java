@@ -19,10 +19,13 @@ import com.muhammaddaffa.nextgens.generators.managers.GeneratorManager;
 import com.muhammaddaffa.nextgens.generators.runnables.CorruptionTask;
 import com.muhammaddaffa.nextgens.generators.runnables.GeneratorTask;
 import com.muhammaddaffa.nextgens.generators.runnables.NotifyTask;
+import com.muhammaddaffa.nextgens.hooks.ProtectionHook;
 import com.muhammaddaffa.nextgens.hooks.bento.BentoListener;
 import com.muhammaddaffa.nextgens.hooks.fabledsb.FabledSbListener;
+import com.muhammaddaffa.nextgens.hooks.griefprevention.GPHook;
 import com.muhammaddaffa.nextgens.hooks.papi.GensExpansion;
 import com.muhammaddaffa.nextgens.hooks.ssb2.SSB2Listener;
+import com.muhammaddaffa.nextgens.hooks.worldguard.WorldGuardHook;
 import com.muhammaddaffa.nextgens.sell.listeners.HandSellListener;
 import com.muhammaddaffa.nextgens.sell.multipliers.SellMultiplierRegistry;
 import com.muhammaddaffa.nextgens.refund.RefundManager;
@@ -51,6 +54,7 @@ import org.popcraft.bolt.BoltAPI;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,6 +99,7 @@ public final class NextGens extends JavaPlugin {
 
     // API
     private BoltAPI boltAPI;
+    private final List<ProtectionHook> protectionHooks = new ArrayList<>();
 
     public static Config DEFAULT_CONFIG, GENERATORS_CONFIG, SHOP_CONFIG, UPGRADE_GUI_CONFIG,
             CORRUPT_GUI_CONFIG, EVENTS_CONFIG, DATA_CONFIG, WORTH_CONFIG, SETTINGS_GUI_CONFIG,
@@ -286,6 +291,14 @@ public final class NextGens extends JavaPlugin {
             Logger.info("Found FabledSkyblock! Registering hook...");
             pm.registerEvents(new FabledSbListener(this.generatorManager, this.refundManager), this);
         }
+        if (pm.getPlugin("GriefPrevention") != null) {
+            Logger.info("Found GriefPrevention! Registering hook...");
+            this.protectionHooks.add(new GPHook());
+        }
+        if (pm.getPlugin("WorldGuard") != null) {
+            Logger.info("Found WorldGuard! Registering hook...");
+            this.protectionHooks.add(new WorldGuardHook());
+        }
         // Slimefun integration
         if (pm.isPluginEnabled("Slimfun")) {
             Logger.info("Found Slimefun, registering hook...");
@@ -463,6 +476,10 @@ public final class NextGens extends JavaPlugin {
 
     public BoltAPI getBoltAPI() {
         return boltAPI;
+    }
+
+    public List<ProtectionHook> getProtectionHooks() {
+        return protectionHooks;
     }
 
     public static NextGens getInstance() {
