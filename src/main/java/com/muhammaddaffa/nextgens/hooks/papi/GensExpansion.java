@@ -122,6 +122,13 @@ public class GensExpansion extends PlaceholderExpansion {
             }
             return Common.format(multiplier);
         }
+        if (params.equalsIgnoreCase("multiplier_raw")) {
+            double multiplier = 0.0;
+            for (SellMultiplierProvider provider : registry.getMultipliers()) {
+                multiplier += provider.getMultiplier(player, user, null);
+            }
+            return ((int) multiplier) + "";
+        }
         if (params.equalsIgnoreCase("currentplaced")) {
             return Common.digits(this.generatorManager.getGeneratorCount(player));
         }
