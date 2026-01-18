@@ -5,3 +5,5 @@
 [+] Fix: Resolved critical compilation issues related to 'PlayerHeadObjectContents' by updating Adventure API to 4.26.1.
 [+] Chore: Updated BOM (Bill of Materials) dependencies to 1.55 for improved library compatibility.
 [+] Chore: Disabled generation of 'dependency-reduced-pom.xml' to maintain a cleaner project structure.
+[+] Refactor: Migrated FabledSkyBlock dependency to a local 'libs' folder for better build reliability.
+[+] Chore: Removed redundant Songoda repository from pom.xml.
