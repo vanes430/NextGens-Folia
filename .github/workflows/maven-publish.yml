@@ -41,44 +41,12 @@ jobs:
         if-no-files-found: warn
         retention-days: 5
 
-    - name: Determine Release Tag
-      id: tag_info
-      run: |
-        if [[ "${{ github.ref }}" == refs/tags/* ]]; then
-          echo "tag_name=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-          echo "is_prerelease=false" >> $GITHUB_OUTPUT
-          echo "release_name=Release ${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-        elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-          TAG="${{ github.event.inputs.release_tag }}"
-          if [ -z "$TAG" ]; then TAG="dev"; fi
-          echo "tag_name=$TAG" >> $GITHUB_OUTPUT
-          echo "is_prerelease=true" >> $GITHUB_OUTPUT
-          echo "release_name=Manual Build ($TAG)" >> $GITHUB_OUTPUT
-        else
-          echo "tag_name=dev" >> $GITHUB_OUTPUT
-          echo "is_prerelease=false" >> $GITHUB_OUTPUT
-          echo "release_name=Development Build" >> $GITHUB_OUTPUT
-        fi
-
-    - name: Delete Existing Dev Release (If dev)
-      if: steps.tag_info.outputs.tag_name == 'dev'
-      uses: dev-drprasad/delete-tag-and-release@v0.2.1
+    - name: Release Latest
+      uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        delete_release: true
-        tag_name: dev
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Create Release
-      # Run if it's a tag, master push, or manual. Skip for PRs.
-      if: github.event_name != 'pull_request'
-      uses: softprops/action-gh-release@v1
-      with:
-        files: target/*.jar
-        tag_name: ${{ steps.tag_info.outputs.tag_name }}
-        name: ${{ steps.tag_info.outputs.release_name }}
-        draft: false
-        prerelease: ${{ steps.tag_info.outputs.is_prerelease }}
-        generate_release_notes: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: false
+        title: "Latest Release"
+        files: |
+          target/*.jar
