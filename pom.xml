@@ -6,7 +6,7 @@
 
     <groupId>com.muhammaddaffa</groupId>
     <artifactId>NextGens</artifactId>
-    <version>1.4.5</version>
+    <version>1.4.6</version>
     <packaging>jar</packaging>
 
     <name>NextGens</name>
@@ -160,6 +160,10 @@
         <repository>
             <id>tcoded-releases</id>
             <url>https://repo.tcoded.com/releases</url>
+        </repository>
+        <repository>
+            <id>william278.net</id>
+            <url>https://repo.william278.net/releases</url>
         </repository>
     </repositories>
 
@@ -361,6 +365,13 @@
             <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
             <version>16.18.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- HuskClaims -->
+        <dependency>
+            <groupId>net.william278.huskclaims</groupId>
+            <artifactId>huskclaims-bukkit</artifactId>
+            <version>1.5.10</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

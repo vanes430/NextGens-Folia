@@ -23,6 +23,7 @@ import com.muhammaddaffa.nextgens.hooks.ProtectionHook;
 import com.muhammaddaffa.nextgens.hooks.bento.BentoListener;
 import com.muhammaddaffa.nextgens.hooks.fabledsb.FabledSbListener;
 import com.muhammaddaffa.nextgens.hooks.griefprevention.GPHook;
+import com.muhammaddaffa.nextgens.hooks.huskclaims.HuskClaimsHook;
 import com.muhammaddaffa.nextgens.hooks.papi.GensExpansion;
 import com.muhammaddaffa.nextgens.hooks.ssb2.SSB2Listener;
 import com.muhammaddaffa.nextgens.hooks.worldguard.WorldGuardHook;
@@ -294,6 +295,10 @@ public final class NextGens extends JavaPlugin {
         if (pm.getPlugin("GriefPrevention") != null) {
             Logger.info("Found GriefPrevention! Registering hook...");
             this.protectionHooks.add(new GPHook());
+        }
+        if (pm.getPlugin("HuskClaims") != null) {
+            Logger.info("Found HuskClaims! Registering hook...");
+            this.protectionHooks.add(new HuskClaimsHook());
         }
         if (pm.getPlugin("WorldGuard") != null) {
             Logger.info("Found WorldGuard! Registering hook...");
