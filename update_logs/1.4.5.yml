@@ -1,0 +1,7 @@
+# Update Logs for Version 1.4.5
+
+## Version 1.4.5
+[+] Add: Updated Minecraft dependency to 1.21.11 via Paper API for latest protocol support.
+[+] Fix: Resolved critical compilation issues related to 'PlayerHeadObjectContents' by updating Adventure API to 4.26.1.
+[+] Chore: Updated BOM (Bill of Materials) dependencies to 1.55 for improved library compatibility.
+[+] Chore: Disabled generation of 'dependency-reduced-pom.xml' to maintain a cleaner project structure.
