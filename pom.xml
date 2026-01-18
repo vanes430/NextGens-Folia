@@ -283,8 +283,7 @@
             <groupId>com.craftaro</groupId>
             <artifactId>FabledSkyBlock</artifactId>
             <version>3.0.4-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/FabledSkyBlock-3.0.4-SNAPSHOT.jar</systemPath>
+            <scope>provided</scope>
         </dependency>
         <!-- PlotSquared -->
         <dependency>

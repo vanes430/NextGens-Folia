@@ -30,6 +30,15 @@ jobs:
         distribution: 'temurin'
         cache: 'maven'
 
+    - name: Install FabledSkyBlock to local Maven
+      run: |
+        mvn install:install-file \
+          -Dfile=libs/FabledSkyBlock-3.0.4-SNAPSHOT.jar \
+          -DgroupId=com.craftaro \
+          -DartifactId=FabledSkyBlock \
+          -Dversion=3.0.4-SNAPSHOT \
+          -Dpackaging=jar
+
     - name: Build with Maven
       run: mvn -B install --file pom.xml
 
