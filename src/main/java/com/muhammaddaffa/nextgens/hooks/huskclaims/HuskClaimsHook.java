@@ -2,12 +2,11 @@ package com.muhammaddaffa.nextgens.hooks.huskclaims;
 
 import com.muhammaddaffa.nextgens.hooks.ProtectionHook;
 import net.william278.huskclaims.api.BukkitHuskClaimsAPI;
-import net.william278.huskclaims.claim.Claim;
+import net.william278.huskclaims.libraries.cloplib.operation.OperationType;
+import net.william278.huskclaims.position.Position;
+import net.william278.huskclaims.user.OnlineUser;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.UUID;
 
 public class HuskClaimsHook implements ProtectionHook {
 
@@ -19,10 +18,8 @@ public class HuskClaimsHook implements ProtectionHook {
 
     @Override
     public boolean canAccess(Player player, Block block) {
-        Claim claim = huskClaimsAPI.getClaimAt(huskClaimsAPI.getPosition(block.getLocation())).orElse(null);
-        if (claim == null) return true;
-
-        UUID ownerId = claim.getOwner().orElse(null);
-        return ownerId != null && ownerId.equals(player.getUniqueId());
+        OnlineUser user = huskClaimsAPI.getOnlineUser(player);
+        Position position = huskClaimsAPI.getPosition(block.getLocation());
+        return huskClaimsAPI.isOperationAllowed(user, OperationType.CONTAINER_OPEN, position);
     }
 }
